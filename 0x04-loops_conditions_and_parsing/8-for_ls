@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Bash script that displays content of current directory
+# Displays content in command format
+
+for file in *
+do
+	echo -e "$file" | cut -d "-" -f2
+done

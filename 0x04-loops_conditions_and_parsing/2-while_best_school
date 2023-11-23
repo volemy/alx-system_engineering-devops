@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# This script displays "Best School" using while loop
+
+text="Best School"
+i=0
+while [ "$i" -lt 10 ];
+do
+	echo "$text"
+	((i++))
+done

@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# This displays "Best School" 10 times and "Hi" on a newline at 9th iteration
+
+i=0
+while [ "$i" -lt 10 ];
+do
+    if [ "$i" -eq 8 ];
+    then
+	    echo "Best School"
+	    echo "Hi"
+    else
+	    echo "Best School"
+    fi
+
+    ((i++))
+done

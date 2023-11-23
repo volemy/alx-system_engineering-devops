@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# This diplays "Best School" 8 times, good luck for 8th iteration and bad luck
+# for 5th iteration
+
+i=0
+while [ "$i" -lt 10 ];
+do
+	if [ "$i" -eq 3 ];
+	then
+		echo "bad luck"
+	elif [ "$i" -eq 7 ];
+	then
+		echo "good luck"
+	else
+		echo "Best School"
+	fi
+
+	((i++))
+done
