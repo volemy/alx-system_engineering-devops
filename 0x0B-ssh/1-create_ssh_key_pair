@@ -6,4 +6,4 @@ KEY_BITS="4096"
 PASSPHRASE_KEY="betty"
 
 
-ssh-keygen -b $KEY_BITS -f $PRIVATE_KEY_NAME -N $PASSPHRASE_KEY
+ssh-keygen -b "$KEY_BITS" -f "$PRIVATE_KEY_NAME" -N "$PASSPHRASE_KEY"
