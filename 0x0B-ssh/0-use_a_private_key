@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
 # Bash script that uses ssh to Connect to the server using private key
 
+# Create a symbolic link from id_rsa to school
+ln -s ~/.ssh/id_rsa ~/.ssh/school
+
+# connect to server using school key
 ssh -i ~/.ssh/school ubuntu@54.237.12.204
