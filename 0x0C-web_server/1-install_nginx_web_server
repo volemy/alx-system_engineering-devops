@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Script that configures a new ubuntu machine based on the requirements
+# Install nginx on web
+# nginx should be listening on port 80
+
+sudo apt-get update -y
+sudo apt-get install nginx -y
+sudo ufw allow 'Nginx HTTTP'
+echo "Hello World!" | sudo tee /var/www/html/index.html
+sudo service nginx restart
