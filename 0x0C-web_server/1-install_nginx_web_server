@@ -5,6 +5,7 @@
 
 sudo apt-get update -y
 sudo apt-get install nginx -y
-sudo ufw allow 'Nginx HTTTP'
+sudo service nginx start
+sudo ufw allow 'Nginx HTTP'
 echo "Hello World!" | sudo tee /var/www/html/index.html
 sudo service nginx restart
