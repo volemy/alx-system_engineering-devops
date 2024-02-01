@@ -1,38 +1,19 @@
 #!/usr/bin/env bash
+# Script that displays information about subdomains.
 
-# Function to retrieve DNS information for a subdomain
-get_dns_info() {
+domain_info() {
     local domain="$1"
     local subdomain="$2"
-    dig "$subdomain"."$domain" | awk '/ANSWER SECTION:/ {getline; print; getline; print}'
+    local line
+    line=$(dig "$subdomain"."$domain" | awk '/ANSWER SECTION:/ {getline; print; getline; print}')
+    echo "$subdomain $line" | awk '{printf "The subdomain %s is a %s record and points to %s\n", $1, $2, $3}'
 }
 
-# Function to display information about a subdomain
-display_subdomain_info() {
-    local subdomain="$1"
-    local record_type="$2"
-    local destination="$3"
-    printf "The subdomain %s is a %s record and points to %s\n" "$subdomain" "$record_type" "$destination"
-}
-
-# Main function to handle command line arguments and display information
-main() {
-    local domain="$1"
-    local subdomain="$2"
-
-    if [ "$#" -eq 1 ]; then
-        subdomains=("www" "lb-01" "web-01" "web-02")
-        for sub in "${subdomains[@]}"; do
-            info=$(get_dns_info "$domain" "$sub")
-            display_subdomain_info "$sub" $info
-        done
-    elif [ "$#" -eq 2 ]; then
-        info=$(get_dns_info "$domain" "$subdomain")
-        display_subdomain_info "$subdomain" $info
-    else
-        echo "Usage: $0 <domain> [subdomain]"
-        exit 1
-    fi
-}
-
-main "$@"
+if [ "$#" -eq 1 ]; then
+    domain_information "$1" "www"
+    domain_information "$1" "lb-01"
+    domain_information "$1" "web-01"
+    domain_information "$1" "web-02"
+elif [ "$#" -eq 2 ]; then
+    domain_information "$1" "$2"
+fi
