@@ -8,18 +8,31 @@ sudo apt-get install -y nginx
 # Creating an index.html page
 echo "Hello World!" | sudo tee /var/www/html/index.html
 
-# Performing a "moved permanently redirection" (301)
-new_string="server_name _;\n\trewrite ^\/redirect_me https:\/\/github.com\/besthor permanent;"
-sudo sed -i "s/server_name _;/$new_string/" /etc/nginx/sites-enabled/default
+#check if rewrite directive exists
+if ! grep -q "rewrite ^/redirect_me" /etc/nginx/sites-enabled/default; then
 
-# Creating a 404 Custom error page
-echo "Ceci n'est pas une page" | sudo tee /var/www/html/404.html
+# Perform a "moved permanently redirection" (301)
+new_string="server_name _;\n\trewrite ^\/redirect_me https:\/\/github.com\/volemy/ permanent;"
+
+#Append rewrite directive
+sudo sed -i "s|server_name _;|$new_string|" /etc/nginx/sites-enabled/default
+fi
+
+# create a 404 custom error page
+echo "ceci n'est pas une page"|sudo tee /var/www/html/404.html
+
+# check if error page confg exists
+if ! grep -q "location = /404.html" /etc/nginx/sites-enabled/default; then
+# append custom error page configuration
 new_string="listen 80 default_server;\n\terror_page 404 \/404.html;\n\tlocation = \/404.html {\n\t\troot \/var\/www\/html;\n\t\tinternal;\n\t}"
-
-sudo sed -i "s/listen 80 default_server;/$new_string/" /etc/nginx/sites-enabled/default
-
-# Custom HTTP Response Header
+# remove existing listen directive
+sudo sed -i "s|listen 80 default_server;|$new_string|" /etc/nginx/sites-enabled/default
+fi
+#check if add-header directive exists
+if ! grep -q "add_header X-served-By" /etc/nginx/sites-enabled/default;then
+# Append custom HTTP Response Header
 sudo sed -i "/server_name _/a add_header X-Served-By $HOSTNAME;" /etc/nginx/sites-enabled/default
+fi
 
 # Testing configurations for syntax errors
 sudo nginx -t
