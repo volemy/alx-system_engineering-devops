@@ -1,0 +1,11 @@
+#!/usr/bin/bash
+# Bash script that accepts one argument
+# Script runs whoami command under the user passed as argument
+
+if [ $# -ne 1 ]; then
+	echo "Usage: $0 USERNAME"
+	exit 1
+fi
+
+# Run command whoami if argument is passed
+sudo -u "$1" whoami
