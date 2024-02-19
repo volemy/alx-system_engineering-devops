@@ -7,10 +7,6 @@ import sys
 
 if __name__ == "__main__":
 
-    if len(sys.argv) != 2:
-        print("Usage: python3 script.py EMPLOYEE_ID")
-        sys.exit(1)
-
     employee_id = sys.argv[1]
     base_url = "https://jsonplaceholder.typicode.com/users"
     url = base_url + "/" + employee_id
