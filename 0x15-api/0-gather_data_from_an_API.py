@@ -1,34 +1,36 @@
 #!/usr/bin/python3
-""" Script thats uses REST API for given employee ID, return info
-about is/her TODO list progress"""
+"""
+Script that, using this REST API,
+for a given employee ID,
+Returns information about his/her TODO list progress
+"""
+import json
 import requests
-import sys
+from sys import argv
 
 
 if __name__ == "__main__":
+    sessionReq = requests.Session()
 
-    employee_id = sys.argv[1]
-    base_url = "https://jsonplaceholder.typicode.com/users"
-    url = base_url + "/" + employee_id
+    idEmp = argv[1]
+    idURL = "https://jsonplaceholder.typicode.com/users/{}/todos".format(idEmp)
+    nameURL = "https://jsonplaceholder.typicode.com/users/{}".format(idEmp)
 
-    response = requests.get(url)
-    employee_name = response.json().get("name")
+    employee = sessionReq.get(idURL)
+    employeeName = sessionReq.get(nameURL)
 
-    todo_url = url + "/todos"
-    response = requests.get(todo_url)
-    tasks = response.json()
-    done = 0
-    done_tasks = []
+    json_req = employee.json()
+    name = employeeName.json()['name']
 
-    for task in tasks:
-        if task.get("completed"):
-            done_tasks.append(task.get("title"))
-            done += 1
+    totalTasks = 0
 
-    output = "Employee {} is done with tasks({}/{}):\n".format(
-                employee_name, done, len(tasks))
+    for done_tasks in json_req:
+        if done_tasks['completed']:
+            totalTasks += 1
 
-    for task in done_tasks:
-        output += "\t{}\n".format(task.replace(" ", "\t "))
+    print("Employee {} is done with tasks({}/{}):"
+          .format(name, totalTasks, len(json_req)))
 
-    print(output)
+    for done_tasks in json_req:
+        if done_tasks["completed"]:
+            print("\t " + done_tasks.get("title"))
