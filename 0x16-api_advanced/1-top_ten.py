@@ -13,16 +13,14 @@ def top_ten(subreddit):
     """
     url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
     headers = {'User-Agent': 'Asus-Vivobook/0.0.1'}
-    response = requests.get(url, headers=headers, allow_redirects=False)
+    query_params = {'limit': 10}
+
+    response = requests.get(url, headers=headers, params=query_params
+             allow_redirects=False)
 
     if response.status_code == 404:
         print(None)
-        return
-
-    if response.status_code != 200:
-        raise Exception(f'Error: {response.status_code}')
-
-    data = response.json()
-
-    for post in data['data']['children'][:10]:
-        print(post['data']['title'])
+    else:
+        data = response.json()
+        for post in data['data']['children'][:10]:
+            print(post['data']['title'])
