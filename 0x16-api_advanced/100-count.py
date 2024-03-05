@@ -49,7 +49,7 @@ def recurse(subreddit, hot_list=[]):
     recurse(subreddit, dictionary, after=after)
 
 
-def counter(subreddit, word_list, dictionary=None):
+def count_words(subreddit, word_list, dictionary=None):
     """
     Instantiation
     """
