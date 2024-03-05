@@ -2,7 +2,6 @@
 """
 Function that queries the Reddit API for a given subreddit.
 """
-
 import requests
 
 
@@ -15,16 +14,9 @@ def number_of_subscribers(subreddit):
     headers = {'User-Agent': 'Asus-Vivobook/0.0.1'}
 
     response = requests.get(url, headers=headers, allow_redirects=False)
-
-    #if resposnse status code is 404, subreddit is not valid
     if response.status_code == 404:
         return 0
-
-    # if respose status code is not 200. there was an error
     if resposnse.status_code != 200:
         raise Exception(f'Error: {response.status_code}')
-
     data = response.json()
-
-    # The number of subscribers stored in the 'subscribers'
     return data['data']['subscribers']
