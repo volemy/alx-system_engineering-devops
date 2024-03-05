@@ -3,6 +3,7 @@
 Function that queries the Reddit API and prints
 the top ten hot posts of a subreddit
 """
+
 import re
 import requests
 
@@ -26,7 +27,8 @@ def add_title(dictionary, hot_articles):
 
 def recurse(subreddit, hot_list=[]):
     """
-
+    Method that queries Reddit API and parses the titlemof all hot articles
+    prints a sorted count of given keywords
     """
     url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
     headers = {'User-Agent': 'VivoBook/0.0.1'}
