@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
-Function that queries Reddit Api
+Function that queries Reddit Api for the first 10 posts listed
+for given subreddit
 """
 
 import requests
